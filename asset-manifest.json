@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/uni-calendar-manager/static/css/main.d5b565e4.css",
+    "main.js": "/uni-calendar-manager/static/js/main.3102b6cb.js",
+    "index.html": "/uni-calendar-manager/index.html",
+    "main.d5b565e4.css.map": "/uni-calendar-manager/static/css/main.d5b565e4.css.map",
+    "main.3102b6cb.js.map": "/uni-calendar-manager/static/js/main.3102b6cb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d5b565e4.css",
+    "static/js/main.3102b6cb.js"
+  ]
+}
