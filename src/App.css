@@ -11,6 +11,7 @@
 
 #table {
     display: grid;
+    position: relative;
     grid-template-columns: repeat(8, [col] max(9vw, 7rem));
     grid-template-rows: repeat(24, [row] 4rem);
 }
@@ -32,7 +33,7 @@
     content: "";
     display: block;
     position: absolute;
-    height: 78rem;
+    height: 76rem;
     width: 1px;
     background-color: gray;
     top: 0;
@@ -59,7 +60,7 @@
 
 .event {
     margin: 0;
-    padding: 3vh 1vw;
+    padding: 0 1vw;
     width: 100%;
     height: 100%;
     cursor: pointer;
@@ -72,7 +73,8 @@
     align-items: flex-start;
     justify-content: space-around;
     box-sizing: border-box;
-    font-size: 2vmin;
+    font-size: 1.75vmin;
+    position: absolute;
 }
 
 .event:hover {
@@ -84,4 +86,5 @@
 .event p {
     margin: 0;
     padding: 0;
+    font-weight: bold;
 }
