@@ -97,6 +97,88 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     z-index: 999;
     pointer-events: all;
+    row-gap: 2vmin;
+}
+
+#freq-selector {
+    font-size: 2.5vmin;
+    border: 2px solid lightgray;
+    border-radius: 2vmin;
+    padding: 0.5vmin;
+    outline: none;
+    background: transparent;
+    color: lightgray;
+}
+
+#freq-selector > option {
+    background: #000000;
+}
+
+#date-start, #date-end {
+    font-size: 2.5vmin;
+    border: 2px solid lightgray;
+    border-radius: 2vmin;
+    padding: 0.5vmin;
+    outline: none;
+    background: none;
+    color: lightgray;
+}
+
+#event-time-picker {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2vmin;
+    align-items: center;
+    justify-content: center;
+}
+
+#time-start {
+    font-size: 2.5vmin;
+    border: 2px solid lightgray;
+    border-radius: 2vmin;
+    padding: 0.5vmin 1vmin;
+    outline: none;
+    background: none;
+    color: lightgray;
+}
+
+#time-start::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    padding: 0;
+}
+
+#time-end {
+    font-size: 2.5vmin;
+    border: 2px solid lightgray;
+    border-radius: 2vmin;
+    padding: 0.5vmin 1vmin;
+    outline: none;
+    background: none;
+    color: lightgray;
+    width: 5vmin;
+    text-align: center;
+}
+
+#time-end::-webkit-inner-spin-button {
+    display: none;
+}
+
+button {
+    font-size: 2.5vmin;
+    border: 2px solid lightgray;
+    border-radius: 2vmin;
+    padding: 0.5vh 0.5vw;
+    outline: none;
+    background: none;
+    color: lightgray;
+}
+
+#event-btn-container, #event-date-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2vmin;
 }

@@ -7,11 +7,17 @@ import EventEditor from './components/eventEditor';
 function App() {
   const [events, setEvents] = useState([{frequency: EventFrequency.Once, dateStart: new Date(), dateEnd: new Date(), timeStart: 30, timeEnd: 45, name: "Hello", location: {building: "ASD", floor: "00", room: "410"}, colour: "#ffffff"} as Event]);
   const [eventEditorContent, setEventEditorContent] = useState({} as Event);
+  const updateEvent = (oldEvent: Event, newEvent: Event) => {
+    console.log(oldEvent, newEvent);
+    let newEvents = events;
+    newEvents[events.findIndex((e: Event) => e == oldEvent)] = newEvent;
+    setEvents(newEvents);
+  }
 
   return (
     <div className="App">
       <Table events={events} setEvents={setEvents} setEventEditorContent={setEventEditorContent}/>
-      <EventEditor event={eventEditorContent} setEventEditorContent={setEventEditorContent}/>
+      {Object.keys(eventEditorContent).length > 0 && <EventEditor updateEvent={updateEvent} eventEditorContent={eventEditorContent} setEventEditorContent={setEventEditorContent}/>}
     </div>
   );
 }

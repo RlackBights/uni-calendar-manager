@@ -6,6 +6,10 @@ export function getTimeFromMinutes(minutes: number) {
     return normaliseTime(Math.floor(minutes / 60), minutes % 60);
 }
 
+export function getMinutesFromTime(time: string) {
+    return ((parseInt(time.split(":")[0]) - 6) * 60) + parseInt(time.split(":")[1]);
+}
+
 export function getFontColour(bgColor: string) {
     let color: string = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
     let r: number = parseInt(color.substring(0, 2), 16); // hexToR
