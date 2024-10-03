@@ -3,21 +3,38 @@ import './App.css';
 import Table from './components/table';
 import { Event, EventFrequency } from './components/events';
 import EventEditor from './components/eventEditor';
+import Navbar from './components/navbar';
+
+let savedEvents = (JSON.parse(localStorage.getItem("events")!) as Event[]);
+savedEvents.forEach((e: any) => {e.dateStart = new Date(e.dateStart); e.dateEnd = new Date(e.dateEnd);});
 
 function App() {
-  const [events, setEvents] = useState([{frequency: EventFrequency.Once, dateStart: new Date(), dateEnd: new Date(), timeStart: 30, timeEnd: 45, name: "Hello", location: {building: "ASD", floor: "00", room: "410"}, colour: "#ffffff"} as Event]);
+  if (!localStorage.getItem("events")) localStorage.setItem("events", JSON.stringify([]));
+  
+  const [events, setEvents] = useState(savedEvents);
   const [eventEditorContent, setEventEditorContent] = useState({} as Event);
-  const updateEvent = (oldEvent: Event, newEvent: Event) => {
-    console.log(oldEvent, newEvent);
+  const [activeDate, setActiveDate] = useState(new Date());
+  const updateEvent = (oldEvent: Event, newEvent: Event, remove: Boolean = false) => {
     let newEvents = events;
-    newEvents[events.findIndex((e: Event) => e == oldEvent)] = newEvent;
+
+    if (remove) newEvents = newEvents.filter((e: Event) => e !== oldEvent);
+    else newEvents[events.findIndex((e: Event) => e === oldEvent)] = newEvent;
+    
     setEvents(newEvents);
+    localStorage.setItem("events", JSON.stringify(newEvents));
   }
 
   return (
     <div className="App">
-      <Table events={events} setEvents={setEvents} setEventEditorContent={setEventEditorContent}/>
+      <Navbar activeDate={activeDate} setActiveDate={setActiveDate}/>
+      <button id='new-event' onClick={() => {
+        let newEvent = {frequency: EventFrequency.Once, dateStart: activeDate, dateEnd: activeDate, timeStart: 0, timeEnd: 60, name: "New Event", location: {building: "-", floor: "-", room: "-"}, colour: "#ffffff"} as Event;
+        setEvents(currEvents => [...currEvents, newEvent]);
+        setEventEditorContent(newEvent);
+      }}>New event</button>
+      <Table events={events} setEvents={setEvents} setEventEditorContent={setEventEditorContent} activeDate={activeDate}/>
       {Object.keys(eventEditorContent).length > 0 && <EventEditor updateEvent={updateEvent} eventEditorContent={eventEditorContent} setEventEditorContent={setEventEditorContent}/>}
+      
     </div>
   );
 }
