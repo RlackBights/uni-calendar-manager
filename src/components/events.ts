@@ -7,9 +7,9 @@ export enum EventFrequency {
 }
 
 export interface EventLocation {
-    building: String;
-    floor: String;
-    room: String;
+    building: string;
+    floor: string;
+    room: string;
 }
 
 export interface Event {
@@ -18,7 +18,7 @@ export interface Event {
     dateEnd: Date;
     timeStart: number; // minutes past 6 am
     timeEnd: number; // minutes after time start
-    name: String;
+    name: string;
     location: EventLocation;
-    color: String; // hex code
+    colour: string; // hex code
 }

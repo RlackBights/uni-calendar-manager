@@ -1,7 +1,7 @@
 import { Event } from "./events";
-import { getTimeFromMinutes } from "./utils";
+import { getFontColour, getTimeFromMinutes } from "./utils";
 
-export default function Table({ events, setEvents } : { events: Event[], setEvents: Function }) {
+export default function Table({ events, setEvents, setEventEditorContent } : { events: Event[], setEvents: Function, setEventEditorContent: Function }) {
 
     return (
         <div id="table">
@@ -18,7 +18,7 @@ export default function Table({ events, setEvents } : { events: Event[], setEven
             ))]}
 
             {events.map((event, index) => (
-                <div className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${(event.dateStart.getDay() == 0) ? 7 : event.dateStart.getDay()+1} / span 1`, backgroundColor: event.color.toString()}}>
+                <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${(event.dateStart.getDay() === 0) ? 7 : event.dateStart.getDay()+1} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
                     <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
                     <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
                 </div>

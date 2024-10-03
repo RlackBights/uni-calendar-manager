@@ -75,16 +75,28 @@
     box-sizing: border-box;
     font-size: 1.75vmin;
     position: absolute;
+    font-weight: bold;
 }
 
 .event:hover {
-    width: 105%;
-    height: 105%;
-    transform: translateX(-2.5%) translateY(-2.5%);
+    transform: scale(105%);
 }
 
 .event p {
     margin: 0;
     padding: 0;
-    font-weight: bold;
+}
+
+#event-editor {
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000088;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    pointer-events: all;
 }
