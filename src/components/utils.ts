@@ -82,7 +82,6 @@ export function doesEventMatchFilters(event: Event, activeDate: Date) {
     case EventFrequency.Weekly:
       return isDateBetweenDates(activeDate, getFirstDayOfWeek(event.dateStart), getLastDayOfWeek(event.dateEnd));
     case EventFrequency.Yearly:
-      console.log(new Date(new Date(activeDate.getFullYear(), event.dateStart.getMonth(), 1).setDate(event.dateStart.getDate())));
-      return areDatesSameWeek(stripDate(activeDate), new Date(new Date(activeDate.getFullYear(), event.dateStart.getMonth(), 1).setDate(event.dateStart.getDate()))) /*(isDateBetweenDates(activeDate, getFirstDayOfWeek(event.dateStart), getLastDayOfWeek(event.dateEnd)) && true)*/;
+      return (isDateBetweenDates(activeDate, getFirstDayOfWeek(event.dateStart), getLastDayOfWeek(event.dateEnd)) && areDatesSameWeek(stripDate(activeDate), new Date(new Date(activeDate.getFullYear(), event.dateStart.getMonth(), 1).setDate(event.dateStart.getDate()))));
   }
 }
