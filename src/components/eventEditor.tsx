@@ -21,8 +21,8 @@ export default function EventEditor({ updateEvent, eventEditorContent, setEventE
                 <select name="frequency" id="freq-selector" value={eventEditorContent.frequency} onChange={(e) => setEventEditorContent({...eventEditorContent, frequency: parseInt(e.target.value)})}>
                     {Object.keys(EventFrequency).filter(s => isNaN(Number(s))).map(freq => <option value={EventFrequency[freq as keyof typeof EventFrequency]}>{freq}</option>)}
                 </select>
-                <input type="date" name="date-start" id="date-start" value={eventEditorContent.dateStart.toISOString().substring(0, 10)} onChange={(e) => setEventEditorContent({...eventEditorContent, dateStart: new Date(e.target.value)})} />
-                {(eventEditorContent.frequency !== EventFrequency.Once) && <input type="date" name="date-end" id="date-end" value={eventEditorContent.dateEnd.toISOString().substring(0, 10)} onChange={(e) => setEventEditorContent({...eventEditorContent, dateEnd: new Date(e.target.value)})} />}
+                <input type="date" name="date-start" id="date-start" max={eventEditorContent.dateEnd.toISOString().substring(0, 10)} value={eventEditorContent.dateStart.toISOString().substring(0, 10)} onChange={(e) => setEventEditorContent({...eventEditorContent, dateStart: new Date(e.target.value)})} />
+                {(eventEditorContent.frequency !== EventFrequency.Once) && <input type="date" name="date-end" id="date-end" min={eventEditorContent.dateStart.toISOString().substring(0, 10)} value={eventEditorContent.dateEnd.toISOString().substring(0, 10)} onChange={(e) => setEventEditorContent({...eventEditorContent, dateEnd: new Date(e.target.value)})} />}
             </div>
             <div id="event-time-picker">
                 <input type="time" name="time-start" min={"06:00"} max={"23:59"} step={900} id="time-start" value={getTimeFromMinutes(eventEditorContent.timeStart + 360)} onChange={(e) => setEventEditorContent({...eventEditorContent, timeStart: getMinutesFromTime(e.target.value)})} />

@@ -1,4 +1,5 @@
 import { Event, EventFrequency } from "./events";
+import { NavbarMode } from "./navbar";
 
 export function normaliseTime(hours: number, minutes: number) {
     return `${(hours > 9) ? hours : "0" + hours}:${(minutes > 9) ? minutes : "0" + minutes}`;
@@ -13,7 +14,7 @@ export function getMinutesFromTime(time: string) {
 }
 
 export function getWrittenDate(date: Date) {
-  return `${["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][date.getDay()]} ${date.getDate()}. ${["January", "February", "March", "April", "May", "June", "July", "Auugust", "September", "October", "November", "December"][date.getMonth()]} ${date.getFullYear()}`;
+  return [`${["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][date.getDay()]}, ${date.getDate()}`, ["January", "February", "March", "April", "May", "June", "July", "Auugust", "September", "October", "November", "December"][date.getMonth()], date.getFullYear()];
 }
 
 export function getFontColour(bgColor: string) {
@@ -36,26 +37,49 @@ export function areDatesSameWeek(date1: Date, date2: Date) {
   return (new Date().setTime((date1.getTime() - (date1.getTime() % 86400000)) - (date1.getDay() === 0 ? 7 : date1.getDay()) * 86400000)) === (new Date().setTime((date2.getTime() - (date2.getTime() % 86400000)) - (date2.getDay() === 0 ? 7 : date2.getDay()) * 86400000));
 }
 
+export function isDateBetweenDates(date: Date, date1: Date, date2: Date) {
+  return stripDate(date).getTime() >= stripDate(date1).getTime() && stripDate(date).getTime() <= stripDate(date2).getTime();
+}
+
+export function isDateWorkday(date: Date) {
+  return date.getDay() !== 0 && date.getDay() !== 6;
+}
+
 export function getFirstDayOfWeek(date: Date) {
   return new Date((date.getTime() - (date.getTime() % 86400000)) - (date.getDay() === 0 ? 7 : date.getDay()) * 86400000 + 86400000);
 }
+
+export function stripDate(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+export function changeDate(date: Date, changeType: NavbarMode, changeAmount: number) {
+  switch (changeType) {
+    case NavbarMode.Day:
+      return new Date(date.setDate(date.getDate() + changeAmount));
+    case NavbarMode.Month:
+      return new Date(date.setMonth(date.getMonth() + changeAmount));
+    case NavbarMode.Year:
+      return new Date(date.setFullYear(date.getFullYear() + changeAmount));
+  }
+} 
 
 export function doesEventMatchFilters(event: Event, activeDate: Date) {
   switch (event.frequency) {
     case EventFrequency.Once:
       return areDatesSameWeek(event.dateStart, activeDate);
     case EventFrequency.Daily:
-      return true;
+      return isDateBetweenDates(activeDate, event.dateStart, event.dateEnd);
+    case EventFrequency.Workdays:
+      return (isDateBetweenDates(activeDate, event.dateStart, event.dateEnd) && isDateWorkday(activeDate));
+    case EventFrequency.Weekends:
+      return isDateBetweenDates(activeDate, event.dateStart, event.dateEnd) && !isDateWorkday(activeDate);
       break;
     case EventFrequency.Weekly:
       break;
     case EventFrequency.Monthly:
       break;
     case EventFrequency.Yearly:
-      break;
-    case EventFrequency.Workdays:
-      break;
-    case EventFrequency.Weekends:
       break;
   }
 }

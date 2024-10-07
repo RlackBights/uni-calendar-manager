@@ -48,12 +48,33 @@
     scale: 140%;
 }
 
+#date-display {
+    display: flex;
+    transition: all 0.2s;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1vw;
+    z-index: 50;
+}
+
+#date-display > h1 {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+#date-display > h1:hover {
+    text-decoration: underline;
+}
+
 #new-event {
     position: fixed;
-    top: 15vh;
-    left: 15vh;
+    top: 2.5vh;
+    left: 8vw;
     font-size: 4vmin;
-    padding: 1.25vmin;
+    padding: 1vmin 1.25vmin;
     transition: all 0.2s;
     z-index: 50;
 }
@@ -66,7 +87,7 @@
     display: grid;
     position: relative;
     top: 10vh;
-    grid-template-columns: repeat(8, [col] max(9vw, 7rem));
+    grid-template-columns: repeat(8, [col] 9vw);
     grid-template-rows: repeat(24, [row] 4rem);
 }
 
@@ -105,10 +126,10 @@
     content: "";
     display: block;
     position: absolute;
-    width: calc(max(9vw, 7rem) * 7);
+    width: calc(9vw * 7);
     height: 1px;
     background-color: gray;
-    right: calc(max(9vw, 7rem) * 7 * -1);
+    right: calc(9vw * -7);
     top: 20%;
 }
 
@@ -294,7 +315,7 @@ button {
 
 #current-time-display {
     content: "";
-    width: max(9vw, 7rem);
+    width: 9vw;
     height: 2px;
     background-color: red;
     position: absolute;
@@ -310,4 +331,50 @@ button {
     background-color: red;
     transform: translateY(-43.5%);
     clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+}
+
+@media (max-width: 1200px) {
+    #navbar p:first-of-type {
+        left: 23vw;
+    }
+
+    #navbar p:last-of-type {
+        right: 23vw;
+    }
+    
+}
+
+@media (max-width: 1000px) {
+    
+    #new-event {
+        top: 85vh;
+        left: 50vw;
+        transform: translateX(-50%);
+        height: 3rem;
+        text-align: center;
+        padding: 0;
+        aspect-ratio: 1/1;
+        font-size: 0;
+        border-radius: 50%;
+    }
+
+    #new-event::before {
+        padding: 0;
+        margin: 0;
+        content: "+";
+        font-size: 5vmin;
+        font-weight: bold;
+    }
+
+    .day-header > p {
+        font-size: 2vmin;
+    }
+
+    #date-display {
+        font-size: 1.5vw;
+    }
+
+    .time-slot {
+        font-size: 2vmin;
+    }
 }

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Event, EventFrequency } from "./events";
-import { areDatesSameWeek, doesEventMatchFilters, getFirstDayOfWeek, getFontColour, getTimeFromMinutes } from "./utils";
+import { areDatesSameWeek, doesEventMatchFilters, getFirstDayOfWeek, getFontColour, getTimeFromMinutes, isDateBetweenDates, stripDate } from "./utils";
 
 export default function Table({ events, setEvents, setEventEditorContent, activeDate } : { events: Event[], setEvents: Function, setEventEditorContent: Function, activeDate: Date }) {
-    const [timeDisplay, setTimeDisplay] = useState({left: `calc(max(9vw, 7rem) * ${(new Date().getDay() === 0 ? 7 : new Date().getDay())})`, top: `${Math.max(4, ((new Date().getHours() - 5) * 4 + new Date().getMinutes() * (4/60)))}rem`});
+    const [timeDisplay, setTimeDisplay] = useState({left: `calc(9vw * ${(new Date().getDay() === 0 ? 7 : new Date().getDay())})`, top: `${Math.max(4, ((new Date().getHours() - 5) * 4 + new Date().getMinutes() * (4/60)))}rem`});
     
     useEffect(() => {
         setInterval(() => {
-            setTimeDisplay({left: `calc(max(9vw, 7rem) * ${(new Date().getDay() === 0 ? 7 : new Date().getDay())})`, top: `${Math.max(4, ((new Date().getHours() - 5) * 4 + new Date().getMinutes() * (4/60)))}rem`});
+            setTimeDisplay({left: `calc(9vw * ${(new Date().getDay() === 0 ? 7 : new Date().getDay())})`, top: `${Math.max(4, ((new Date().getHours() - 5) * 4 + new Date().getMinutes() * (4/60)))}rem`});
         }, 1000);
     }, [])
 
@@ -31,22 +31,22 @@ export default function Table({ events, setEvents, setEventEditorContent, active
                 </div>
             ))]}
 
-            {events.filter((event) => (doesEventMatchFilters(event, activeDate))).map((event, index) => (
+            {events.filter((event) => (true)).map((event, index) => (
                 <>
-                    {event.frequency === EventFrequency.Daily && [...Array(7)].map((_, index) => {
-                        <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${index + 1} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
-                            <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
-                            <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
-                        </div>
-                    })}
-                    {event.frequency !== EventFrequency.Daily && <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${(event.dateStart.getDay() === 0) ? 7 : event.dateStart.getDay()+1} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
+                    {![EventFrequency.Daily, EventFrequency.Workdays, EventFrequency.Weekends].includes(event.frequency) && doesEventMatchFilters(event, activeDate) && <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${(event.dateStart.getDay() === 0) ? 7 : event.dateStart.getDay()+1} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
                         <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
                         <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
                     </div>}
+                    {[EventFrequency.Daily, EventFrequency.Workdays, EventFrequency.Weekends].includes(event.frequency) && ([...Array(7)].map((_, index) => ((doesEventMatchFilters(event, new Date(stripDate(getFirstDayOfWeek(activeDate)).getTime() + 86400000 * index))) && (
+                        <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${index + 2} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
+                            <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
+                            <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
+                        </div>
+                    ))))}
                 </>
             ))}
 
-            <div id="current-time-display" style={timeDisplay}></div>
+            {areDatesSameWeek(new Date(), activeDate) && <div id="current-time-display" style={timeDisplay}></div>}
         
         </div>
     )
