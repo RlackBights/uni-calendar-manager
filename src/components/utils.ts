@@ -1,3 +1,4 @@
+import { isDate } from "util/types";
 import { Event, EventFrequency } from "./events";
 import { NavbarMode } from "./navbar";
 
@@ -49,6 +50,10 @@ export function getFirstDayOfWeek(date: Date) {
   return new Date((date.getTime() - (date.getTime() % 86400000)) - (date.getDay() === 0 ? 7 : date.getDay()) * 86400000 + 86400000);
 }
 
+export function getLastDayOfWeek(date: Date) {
+  return new Date((date.getTime() - (date.getTime() % 86400000)) - (date.getDay() === 0 ? 7 : date.getDay()) * 86400000 + 86400000 * 7);
+}
+
 export function stripDate(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
@@ -74,12 +79,10 @@ export function doesEventMatchFilters(event: Event, activeDate: Date) {
       return (isDateBetweenDates(activeDate, event.dateStart, event.dateEnd) && isDateWorkday(activeDate));
     case EventFrequency.Weekends:
       return isDateBetweenDates(activeDate, event.dateStart, event.dateEnd) && !isDateWorkday(activeDate);
-      break;
     case EventFrequency.Weekly:
-      break;
-    case EventFrequency.Monthly:
-      break;
+      return isDateBetweenDates(activeDate, getFirstDayOfWeek(event.dateStart), getLastDayOfWeek(event.dateEnd));
     case EventFrequency.Yearly:
-      break;
+      console.log(new Date(new Date(activeDate.getFullYear(), event.dateStart.getMonth(), 1).setDate(event.dateStart.getDate())));
+      return areDatesSameWeek(stripDate(activeDate), new Date(new Date(activeDate.getFullYear(), event.dateStart.getMonth(), 1).setDate(event.dateStart.getDate()))) /*(isDateBetweenDates(activeDate, getFirstDayOfWeek(event.dateStart), getLastDayOfWeek(event.dateEnd)) && true)*/;
   }
 }

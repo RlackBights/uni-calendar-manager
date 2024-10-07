@@ -4,7 +4,6 @@ export enum EventFrequency {
     Workdays,
     Weekends,
     Weekly,
-    Monthly,
     Yearly
 }
 

@@ -31,18 +31,26 @@ export default function Table({ events, setEvents, setEventEditorContent, active
                 </div>
             ))]}
 
-            {events.filter((event) => (true)).map((event, index) => (
+            {events.map((event, index) => (
                 <>
-                    {![EventFrequency.Daily, EventFrequency.Workdays, EventFrequency.Weekends].includes(event.frequency) && doesEventMatchFilters(event, activeDate) && <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${(event.dateStart.getDay() === 0) ? 7 : event.dateStart.getDay()+1} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
-                        <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
-                        <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
-                    </div>}
+                    {![EventFrequency.Daily, EventFrequency.Workdays, EventFrequency.Weekends, EventFrequency.Yearly].includes(event.frequency) && doesEventMatchFilters(event, activeDate) && 
+                        <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${(event.dateStart.getDay() === 0) ? 7 : event.dateStart.getDay()+1} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
+                            <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
+                            <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
+                        </div>
+                    }
                     {[EventFrequency.Daily, EventFrequency.Workdays, EventFrequency.Weekends].includes(event.frequency) && ([...Array(7)].map((_, index) => ((doesEventMatchFilters(event, new Date(stripDate(getFirstDayOfWeek(activeDate)).getTime() + 86400000 * index))) && (
                         <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${index + 2} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
                             <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
                             <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
                         </div>
                     ))))}
+                    {event.frequency === EventFrequency.Yearly && doesEventMatchFilters(event, activeDate) && 
+                        <div onClick={() => setEventEditorContent(event)} key={index} className="event" style={{top: `${((event.timeStart % 60) / 60) * 100}%`, height: `${(event.timeEnd / 60) * 100}%`, gridRow: `${2 + Math.floor(event.timeStart / 60)} / span 1`, gridColumn: `${(-stripDate(getFirstDayOfWeek(new Date(new Date(activeDate.getFullYear(), event.dateStart.getMonth()).setDate(event.dateStart.getDate())))).getTime() + stripDate(new Date(new Date(activeDate.getFullYear(), event.dateStart.getMonth()).setDate(event.dateStart.getDate()))).getTime()) / 86400000 + 1} / span 1`, backgroundColor: event.colour, color: getFontColour(event.colour)}}>
+                            <p style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}><span>{event.name}</span><span>{getTimeFromMinutes(event.timeStart + 360)}-{getTimeFromMinutes(event.timeStart + event.timeEnd + 360)}</span></p>
+                            <p>{event.location.building} {event.location.floor}-{event.location.room}</p>
+                        </div>
+                    }
                 </>
             ))}
 
