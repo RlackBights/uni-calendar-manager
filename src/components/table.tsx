@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Event, EventFrequency } from "./events";
-import { areDatesSameWeek, doesEventMatchFilters, getFirstDayOfWeek, getFontColour, getTimeFromMinutes, isDateBetweenDates, stripDate } from "./utils";
+import { areDatesSameWeek, doesEventMatchFilters, getFirstDayOfWeek, getFontColour, getTimeFromMinutes, stripDate } from "./utils";
 
-export default function Table({ events, setEvents, setEventEditorContent, activeDate } : { events: Event[], setEvents: Function, setEventEditorContent: Function, activeDate: Date }) {
+export default function Table({ events, setEventEditorContent, activeDate } : { events: Event[], setEventEditorContent: Function, activeDate: Date }) {
     const [timeDisplay, setTimeDisplay] = useState({left: `calc(9vw * ${(new Date().getDay() === 0 ? 7 : new Date().getDay())})`, top: `${Math.max(4, ((new Date().getHours() - 5) * 4 + new Date().getMinutes() * (4/60)))}rem`});
     
     useEffect(() => {

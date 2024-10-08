@@ -5,12 +5,12 @@ import { Event, EventFrequency } from './components/events';
 import EventEditor from './components/eventEditor';
 import Navbar from './components/navbar';
 
+
+if (!localStorage.getItem("events")) localStorage.setItem("events", "[]");
 let savedEvents = (JSON.parse(localStorage.getItem("events")!) as Event[]);
 savedEvents.forEach((e: any) => {e.dateStart = new Date(e.dateStart); e.dateEnd = new Date(e.dateEnd);});
 
 function App() {
-  if (!localStorage.getItem("events")) localStorage.setItem("events", JSON.stringify([]));
-  
   const [events, setEvents] = useState(savedEvents);
   const [eventEditorContent, setEventEditorContent] = useState({} as Event);
   const [activeDate, setActiveDate] = useState(new Date());
@@ -32,7 +32,7 @@ function App() {
         setEvents(currEvents => [...currEvents, newEvent]);
         setEventEditorContent(newEvent);
       }}>New event</button>
-      <Table events={events} setEvents={setEvents} setEventEditorContent={setEventEditorContent} activeDate={activeDate}/>
+      <Table events={events} setEventEditorContent={setEventEditorContent} activeDate={activeDate}/>
       {Object.keys(eventEditorContent).length > 0 && <EventEditor updateEvent={updateEvent} eventEditorContent={eventEditorContent} setEventEditorContent={setEventEditorContent}/>}
       
     </div>

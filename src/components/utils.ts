@@ -1,4 +1,3 @@
-import { isDate } from "util/types";
 import { Event, EventFrequency } from "./events";
 import { NavbarMode } from "./navbar";
 
@@ -67,7 +66,11 @@ export function changeDate(date: Date, changeType: NavbarMode, changeAmount: num
     case NavbarMode.Year:
       return new Date(date.setFullYear(date.getFullYear() + changeAmount));
   }
-} 
+}
+
+export function getCollidingEvents(events: Event[]) {
+  events.filter(e => events.filter(e2 => (e.timeStart < e2.timeStart && (e.timeStart + e.timeEnd) > e2.timeStart)));
+}
 
 export function doesEventMatchFilters(event: Event, activeDate: Date) {
   switch (event.frequency) {
