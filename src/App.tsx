@@ -36,7 +36,7 @@ function App() {
       <div id='import-calendar'>
         <button onClick={() => {
           try {
-            navigator.clipboard.writeText(`unical&&${btoa(JSON.stringify(events))}`).then(() => {
+            navigator.clipboard.writeText(`unical&&${btoa(encodeURIComponent(JSON.stringify(events)))}`).then(() => {
               let calendarCode = document.getElementById("calendar-code")!;
               calendarCode.textContent = "ASDASDASDASDASD";
               calendarCode.style.display = "block";
@@ -59,7 +59,7 @@ function App() {
           navigator.clipboard.readText().then(res => {
             if (!res.startsWith("unical&&")) alert("Invalid clipboard content");
             else {
-              let newArr = JSON.parse(atob(res.split("&&")[1])) as Event[];
+              let newArr = JSON.parse(decodeURIComponent(atob(res.split("&&")[1]))) as Event[];
               newArr.forEach((e: Event) => {
                 e.dateStart = new Date(e.dateStart);
                 e.dateEnd = new Date(e.dateEnd);
