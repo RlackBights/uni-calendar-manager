@@ -57,15 +57,33 @@ function App() {
         </button>
         <button onClick={() => {
           navigator.clipboard.readText().then(res => {
-            if (!res.startsWith("unical&&")) alert("Invalid clipboard content");
+            if (!res.startsWith("unical&&")) 
+            {
+              let calendarCode = document.getElementById("calendar-code")!;
+              calendarCode.textContent = "Invalid clipboard content!";
+              calendarCode.style.display = "block";
+              setTimeout(() => {
+                calendarCode.style.display = "none";
+              }, 7500);
+            }
             else {
-              let newArr = JSON.parse(decodeURIComponent(atob(res.split("&&")[1]))) as Event[];
-              newArr.forEach((e: Event) => {
-                e.dateStart = new Date(e.dateStart);
-                e.dateEnd = new Date(e.dateEnd);
-              });
-              setEvents(newArr);
-              localStorage.setItem("events", JSON.stringify(newArr));
+              console.log(JSON.parse(decodeURIComponent(atob(res.split("&&")[1]))));
+              try {
+                let newArr = JSON.parse(decodeURIComponent(atob(res.split("&&")[1]))) as Event[];
+                newArr.forEach((e: Event) => {
+                  e.dateStart = new Date(e.dateStart);
+                  e.dateEnd = new Date(e.dateEnd);
+                });
+                setEvents(newArr);
+                localStorage.setItem("events", JSON.stringify(newArr));
+              } catch (e) {
+                let calendarCode = document.getElementById("calendar-code")!;
+                calendarCode.textContent = "ERROR: " + e;
+                calendarCode.style.display = "block";
+                setTimeout(() => {
+                  calendarCode.style.display = "none";
+                }, 7500);
+              }
             }
           })
         }}>
