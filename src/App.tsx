@@ -35,12 +35,14 @@ function App() {
       <p id='calendar-code' style={{display: "none"}}></p>
       <div id='import-calendar'>
         <button onClick={() => {
-          navigator.clipboard.writeText(`unical&&${btoa(JSON.stringify(events))}`);
-          document.getElementById("calendar-code")!.innerHTML = btoa(JSON.stringify(events));
-          document.getElementById("calendar-code")!.style.display = "block";
-          setTimeout(() => {
-            document.getElementById("calendar-code")!.style.display = "none";
-          }, 7500);
+          document.getElementById("import-calendar")!.innerHTML = "";
+          navigator.clipboard.writeText(`unical&&${btoa(JSON.stringify(events))}`).then(() => {
+            document.getElementById("calendar-code")!.innerHTML = btoa(JSON.stringify(events));
+            document.getElementById("calendar-code")!.style.display = "block";
+            setTimeout(() => {
+              document.getElementById("calendar-code")!.style.display = "none";
+            }, 7500);
+          });
         }}>
           Export
         </button>
