@@ -75,6 +75,7 @@
     padding: 1vmin 1.25vmin;
     transition: all 0.2s;
     z-index: 101;
+    background-color: #00000088;
 }
 
 #new-event {
