@@ -107,6 +107,23 @@
     scale: 110%;
 }
 
+#calendar-code {
+    position: fixed;
+    bottom: 20vh;
+    left: 0;
+    width: 50%;
+    text-align: center;
+    z-index: 100;
+    word-break: break-all;
+    transform: translateX(50%);
+    border: 2px solid white;
+    border-radius: 2rem;
+    background-color: #00000099;
+    box-sizing: border-box;
+    padding: 2vmin;
+    user-select: all;
+}
+
 #table {
     display: grid;
     position: relative;
@@ -392,8 +409,7 @@ button {
     
     #import-calendar > button:first-of-type {
         top: 85vh;
-        left: 57vw;
-        transform: translateX(-50%);
+        right: 15vw;
         height: 3rem;
         text-align: center;
         padding: 0;
@@ -411,8 +427,7 @@ button {
     }
     #import-calendar > button:last-of-type {
         top: 85vh;
-        left: 43vw;
-        transform: translateX(-50%);
+        left: 15vw;
         height: 3rem;
         text-align: center;
         padding: 0;
