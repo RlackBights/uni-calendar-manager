@@ -38,7 +38,7 @@ function App() {
           try {
             navigator.clipboard.writeText(`unical&&${btoa(encodeURIComponent(JSON.stringify(events)))}`).then(() => {
               let calendarCode = document.getElementById("calendar-code")!;
-              calendarCode.textContent = "ASDASDASDASDASD";
+              calendarCode.textContent = "Copied to clipboard!";
               calendarCode.style.display = "block";
               setTimeout(() => {
                 calendarCode.style.display = "none";

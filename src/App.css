@@ -111,7 +111,7 @@
     position: fixed;
     bottom: 20vh;
     left: 0;
-    width: 50%;
+    width: fit-content;
     text-align: center;
     z-index: 100;
     word-break: break-all;
@@ -123,6 +123,7 @@
     padding: 2vmin;
     user-select: all;
     z-index: 101;
+
 }
 
 #table {
