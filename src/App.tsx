@@ -32,6 +32,29 @@ function App() {
         setEvents(currEvents => [...currEvents, newEvent]);
         setEventEditorContent(newEvent);
       }}>New event</button>
+      <div id='import-calendar'>
+        <button onClick={() => {
+          navigator.clipboard.writeText(`unical&&${btoa(JSON.stringify(events))}`);
+        }}>
+          Export
+        </button>
+        <button onClick={() => {
+          navigator.clipboard.readText().then(res => {
+            if (!res.startsWith("unical&&")) alert("Invalid clipboard content");
+            else {
+              let newArr = JSON.parse(atob(res.split("&&")[1])) as Event[];
+              newArr.forEach((e: Event) => {
+                e.dateStart = new Date(e.dateStart);
+                e.dateEnd = new Date(e.dateEnd);
+              });
+              setEvents(newArr);
+              localStorage.setItem("events", JSON.stringify(newArr));
+            }
+          })
+        }}>
+          Import
+        </button>
+      </div>
       <Table events={events} setEventEditorContent={setEventEditorContent} activeDate={activeDate}/>
       {Object.keys(eventEditorContent).length > 0 && <EventEditor updateEvent={updateEvent} eventEditorContent={eventEditorContent} setEventEditorContent={setEventEditorContent}/>}
       

@@ -69,17 +69,41 @@
     text-decoration: underline;
 }
 
-#new-event {
+#new-event, #import-calendar > button {
     position: fixed;
-    top: 2.5vh;
-    left: 8vw;
     font-size: 4vmin;
     padding: 1vmin 1.25vmin;
     transition: all 0.2s;
     z-index: 101;
 }
 
-#new-event:hover {
+#new-event {
+    top: 2.5vh;
+    left: 8vw;
+}
+
+#import-calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 6vh;
+    left: 0;
+    width: 100%;
+    font-size: 1vmin;
+    z-index: 101;
+}
+
+#import-calendar button:first-of-type {
+    right: 2vw;
+}
+
+#import-calendar > button:last-of-type {
+    right: 12vw;
+}
+
+#new-event:hover, #import-calendar > button:hover {
     scale: 110%;
 }
 
@@ -362,6 +386,45 @@ button {
         padding: 0;
         margin: 0;
         content: "+";
+        font-size: 5vmin;
+        font-weight: bold;
+    }
+    
+    #import-calendar > button:first-of-type {
+        top: 85vh;
+        left: 57vw;
+        transform: translateX(-50%);
+        height: 3rem;
+        text-align: center;
+        padding: 0;
+        aspect-ratio: 1/1;
+        font-size: 0;
+        border-radius: 50%;
+    }
+
+    #import-calendar > button:first-of-type::before {
+        padding: 0;
+        margin: 0;
+        content: "⎗";
+        font-size: 5vmin;
+        font-weight: bold;
+    }
+    #import-calendar > button:last-of-type {
+        top: 85vh;
+        left: 43vw;
+        transform: translateX(-50%);
+        height: 3rem;
+        text-align: center;
+        padding: 0;
+        aspect-ratio: 1/1;
+        font-size: 0;
+        border-radius: 50%;
+    }
+
+    #import-calendar > button:last-of-type::before {
+        padding: 0;
+        margin: 0;
+        content: "⎘";
         font-size: 5vmin;
         font-weight: bold;
     }
