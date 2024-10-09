@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/uni-calendar-manager/static/css/main.d37bc919.css",
-    "main.js": "/uni-calendar-manager/static/js/main.b7c56e21.js",
+    "main.css": "/uni-calendar-manager/static/css/main.b98dfed0.css",
+    "main.js": "/uni-calendar-manager/static/js/main.acd0dfcb.js",
     "index.html": "/uni-calendar-manager/index.html",
-    "main.d37bc919.css.map": "/uni-calendar-manager/static/css/main.d37bc919.css.map",
-    "main.b7c56e21.js.map": "/uni-calendar-manager/static/js/main.b7c56e21.js.map"
+    "main.b98dfed0.css.map": "/uni-calendar-manager/static/css/main.b98dfed0.css.map",
+    "main.acd0dfcb.js.map": "/uni-calendar-manager/static/js/main.acd0dfcb.js.map"
   },
   "entrypoints": [
-    "static/css/main.d37bc919.css",
-    "static/js/main.b7c56e21.js"
+    "static/css/main.b98dfed0.css",
+    "static/js/main.acd0dfcb.js"
   ]
 }
