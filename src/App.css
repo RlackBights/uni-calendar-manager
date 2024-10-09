@@ -122,6 +122,7 @@
     box-sizing: border-box;
     padding: 2vmin;
     user-select: all;
+    z-index: 101;
 }
 
 #table {
