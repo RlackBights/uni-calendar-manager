@@ -110,12 +110,12 @@
 #calendar-code {
     position: fixed;
     bottom: 20vh;
-    left: 0;
+    left: 50%;
     width: fit-content;
     text-align: center;
     z-index: 100;
     word-break: break-all;
-    transform: translateX(50%);
+    transform: translateX(-50%);
     border: 2px solid white;
     border-radius: 2rem;
     background-color: #00000099;
