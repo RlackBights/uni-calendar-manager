@@ -35,14 +35,23 @@ function App() {
       <p id='calendar-code' style={{display: "none"}}></p>
       <div id='import-calendar'>
         <button onClick={() => {
-          navigator.clipboard.writeText(`unical&&${btoa(JSON.stringify(events))}`).then(() => {
+          try {
+            navigator.clipboard.writeText(`unical&&${btoa(JSON.stringify(events))}`).then(() => {
+              let calendarCode = document.getElementById("calendar-code")!;
+              calendarCode.textContent = "ASDASDASDASDASD";
+              calendarCode.style.display = "block";
+              setTimeout(() => {
+                calendarCode.style.display = "none";
+              }, 7500);
+            });
+          } catch (e) {
             let calendarCode = document.getElementById("calendar-code")!;
-            calendarCode.textContent = "ASDASDASDASDASD";
+            calendarCode.textContent = "ERROR: " + e;
             calendarCode.style.display = "block";
             setTimeout(() => {
               calendarCode.style.display = "none";
             }, 7500);
-          });
+          }
         }}>
           Export
         </button>
