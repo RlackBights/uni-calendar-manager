@@ -17,7 +17,7 @@ export default function Table({ events, setEventEditorContent, activeDate } : { 
                 <>
                     <div key={day} className="day-header" style={{gridRow: 0, gridColumn: index + 2, backgroundColor: ((activeDate.getDay() === 0 ? 7 : activeDate.getDay()) - 1 === index) ? "#222222" : "", position: "relative"}}>
                         <p style={{zIndex: 20}}>{day}<br/>{new Date(getFirstDayOfWeek(activeDate).getTime() + 86400000 * index).getDate()}</p>
-                        <div className="day-column" style={{backgroundColor: ((activeDate.getDay() === 0 ? 7 : activeDate.getDay()) - 1 === index) ? "#222222" : "", width: "100%", position: "absolute", height: "76rem", top: 0}}>
+                        <div className="day-column" style={{backgroundColor: ((activeDate.getDay() === 0 ? 7 : activeDate.getDay()) - 1 === index) ? "#222222" : ""}}>
 
                         </div>
                     </div>

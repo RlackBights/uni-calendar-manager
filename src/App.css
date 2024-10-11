@@ -159,6 +159,13 @@
     left: 0;
 }
 
+.day-column {
+    width: 100%;
+    position: absolute;
+    height: 76rem;
+    top: 0;
+}
+
 .time-slot {
     position: relative;
     text-align: right;
@@ -389,6 +396,26 @@ button {
 }
 
 @media (max-width: 1000px) {
+
+    #table {
+        grid-template-rows: repeat(24, [row] 2rem);
+        grid-template-columns: repeat(8, [col] 11vw);
+    }
+
+    .day-header:not(:first-child):after {
+        content: "";
+        display: block;
+        position: absolute;
+        height: 38rem;
+        width: 1px;
+        background-color: gray;
+        top: 0;
+        left: 0;
+    }
+
+    .day-column {
+        height: 38rem;
+    }
     
     #new-event {
         top: 85vh;
@@ -457,5 +484,10 @@ button {
 
     .time-slot {
         font-size: 2vmin;
+    }
+
+    .time-slot::after {
+        width: calc(11vw * 7);
+        right: calc(11vw * -7);
     }
 }
